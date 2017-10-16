@@ -8,10 +8,9 @@ export class Population{
   }
 
   dailyInfect(plague){
-    let that = this;
-    setInterval(function(){
-      that.deathToll(plague);
-      that.infect(plague);
+    setInterval(() => {
+      this.deathToll(plague);
+      this.infect(plague);
     } ,500);
   }
   infect(plague){
@@ -42,7 +41,6 @@ export class Population{
     } else {
       this.infected = 0;
     }
-
   }
   quarantinedInfected(num){
     let q = Math.floor(this.infected * num);
