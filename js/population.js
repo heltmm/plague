@@ -5,24 +5,24 @@ export class Population{
     this.dead = 0;
     this.quarantined = 0;
     this.interaction = 15;
+    this.message = 'Patient zero has started your infection.'
   }
 
-  dailyInfect(plague){
+  dailyInfect(plague, cdc){
     setInterval(() => {
       this.deathToll(plague);
-      this.infect(plague);
+      this.infect(plague, cdc);
       plague.day++;
     } ,500);
   }
-  infect(plague){
+  infect(plague, cdc){
     let healthyToinfected = Math.floor(this.infected * this.interaction * plague.infectiousRate);
     if ((this.healthy - healthyToinfected ) > 0){
       this.healthy -= healthyToinfected;
       this.infected += healthyToinfected;
-      if (this.infected > 100000000){
-        this.quarantinedInfected(0.5);
-        this.interaction = 7;
-      }
+
+      cdc.quarantine(this);
+
     }else {
       let leftovers = this.healthy;
       this.healthy = 0;
