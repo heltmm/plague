@@ -7,7 +7,7 @@ $(document).ready(function() {
   let population = new Population(7e9-1);
   let cdc = new CDC();
 
-  population.dailyInfect(religion, cdc);
+  // population.dailyInfect(religion, cdc);
 
   let numberWithCommas = function(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -29,9 +29,28 @@ $(document).ready(function() {
     religion.changeDeathRate(0.9);
   });
 
+  $('#normalSpeed').click(function(){
+    population.time = 1500;
+    clearInterval(timer);
+    timer = setInterval(game, population.time);
+  });
+
+  $('#fastSpeed').click(function(){
+    population.time = 500;
+    clearInterval(timer);
+    timer = setInterval(game, population.time);
+
+    // debugger;
+  });
+
+  // setInterval(population.dailyInfectTwo(religion, cdc), population.time);
 
 
-  setInterval(function(){
+
+  let game = function(){
+
+    population.dailyInfect(religion, cdc)
+
     $('#healthyPop').html(`<h1>Current Healthy Pop: ${numberWithCommas(population.healthy)}</h1>`);
     $('#infectedPop').html(`<h1>Current Infected Pop: ${numberWithCommas(population.infected)}</h1>`);
     $('#quarantinedPop').html(`<h1>Current Quarantined Pop: ${numberWithCommas(population.quarantined)}</h1>`);
@@ -41,5 +60,7 @@ $(document).ready(function() {
     $('#plagueDay').html(`<h1>Plague Days: ${religion.day}</h1>`);
     $('#cureDays').html(`<h1>Days To Cure: ${cdc.daysToCure}</h1>`);
     $('#cdc-message').html(`<h1>${cdc.message}</h1>`);
-  }, 500);
+  }
+
+  let timer = setInterval(game, population.time);
 });

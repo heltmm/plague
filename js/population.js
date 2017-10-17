@@ -5,26 +5,35 @@ export class Population{
     this.dead = 0;
     this.quarantined = 0;
     this.interaction = 15;
+    this.time = 1500;
   }
+
+
 
   dailyInfect(plague, cdc){
-    setInterval(() => {
+    if(cdc.daysToCure != 0){
       this.healthy = Math.floor(this.healthy * 1.000011);
-      this.deathToll(plague);
-      if(this.infected > 0  && this.quarantined >= 0){
-        this.infect(plague, cdc);
-      }
-
-      if (this.healthy == 0  && this.infected == 0 && this.quarantined == 0) {
+      if (this.healthy == 0  && this.infected <= 20 && this.quarantined <= 20) {
         plague.day = plague.day;
+        this.healthy = 0;
+        this.infected = 0;
+        this.quarantined = 0;
+        cdc.daysToCure = null;
+        cdc.message = "Everyone is Dead"
       } else {
         plague.day++;
+        this.infect(plague, cdc);
+        this.deathToll(plague);
+        if (cdc.daysToCure) {
+          cdc.daysToCure--;
+        }
       }
-      if (cdc.daysToCure) {
-        cdc.daysToCure--;
-      }
-    } ,500);
+    }
+    else{
+      cdc.message = "Cure Found"
+    }
   }
+
   infect(plague, cdc){
     let healthyToinfected = Math.floor(this.infected * this.interaction * plague.infectiousRate);
     if ((this.healthy - healthyToinfected ) > 0){
@@ -42,6 +51,7 @@ export class Population{
     }
   }
   deathToll(plague){
+
     let almostDead = Math.floor(this.infected * plague.deathRate);
     let almostDeadQuarantined =  Math.floor(this.quarantined * plague.deathRate);
     let dead = Math.floor(Math.random() * almostDead);

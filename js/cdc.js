@@ -1,7 +1,7 @@
 export class CDC {
   constructor() {
     this.message = "Patient zero has started your infection.";
-    this.daysToCure = 0;
+    this.daysToCure = null;
   }
 
 
@@ -14,10 +14,10 @@ export class CDC {
   }
 
   cure(plague, population) {
-    if (plague.deathRate >= 0.14 || population.dead >= 1000000 && this.daysToCure == 0) {
+    if (plague.deathRate >= 0.14 || population.dead >= 1000000 && this.daysToCure == null) {
       plague.infectiousRate = (plague.infectiousRate *= 0.8).toFixed(2);
       this.message = 'The CDC has begun research on a cure.';
-      this.daysToCure = 40;
+      this.daysToCure = 200;
     }
   }
-};
+}
