@@ -5,11 +5,11 @@ export class Population{
     this.dead = 0;
     this.quarantined = 0;
     this.interaction = 15;
-    this.message = 'Patient zero has started your infection.'
   }
 
   dailyInfect(plague, cdc){
     setInterval(() => {
+      this.healthy = Math.floor(this.healthy * 1.000011);
       this.deathToll(plague);
       this.infect(plague, cdc);
       plague.day++;
@@ -22,11 +22,13 @@ export class Population{
       this.infected += healthyToinfected;
 
       cdc.quarantine(this);
+      cdc.cure(plague, this);
 
     }else {
       let leftovers = this.healthy;
       this.healthy = 0;
       this.infected += leftovers;
+      cdc.message = 'Society has collapsed into chaos. No one\'s having babies.';
     }
   }
   deathToll(plague){

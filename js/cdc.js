@@ -1,16 +1,21 @@
-export let CDC = {
-  // parameter: undefined;
+export class CDC {
+  constructor() {
+    this.message = "Patient zero has started your infection.";
+  }
 
 
-  quarantine: function(pop) {
+  quarantine(pop) {
     if(pop.infected > 1000000 ){
-      pop.quarantinedInfected(.5);
-      pop.interaction = 7;
-      pop.message = 'The CDC has quarantined half the infected population.';
+      pop.quarantinedInfected(0.3);
+      pop.interaction = 11;
+      this.message = 'The CDC has quarantined a third of the infected population.';
     }
   }
 
-  cure: function(plague, pop) {
-
+  cure(plague, population) {
+    if (plague.deathRate >= 0.14 || population.dead >= 1000000) {
+      plague.infectiousRate *= 0.99;
+      this.message = 'The CDC has begun research on a cure.'
+    }
   }
-}
+};
