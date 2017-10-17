@@ -11,8 +11,13 @@ export class Population{
     setInterval(() => {
       this.healthy = Math.floor(this.healthy * 1.000011);
       this.deathToll(plague);
-      this.infect(plague, cdc);
+      if(this.infected > 0  && this.quarantined >= 0){
+        this.infect(plague, cdc);
+      }
       plague.day++;
+      if (cdc.daysToCure) {
+        cdc.daysToCure--;
+      }
     } ,500);
   }
   infect(plague, cdc){
@@ -36,14 +41,24 @@ export class Population{
     let almostDeadQuarantined =  Math.floor(this.quarantined * plague.deathRate);
     let dead = Math.floor(Math.random() * almostDead);
     let deadQuarantined = Math.floor(Math.random() * almostDeadQuarantined);
-    if (this.infected > 0) {
+    if ((this.infected - dead) >= 0) {
       this.infected -= dead;
       this.dead += dead;
+
+    }else {
+      let leftoversI = this.infected;
+      this.infected = 0;
+      this.dead += leftoversI;
+    }
+    if ((this.quarantined - deadQuarantined) >= 0){
       this.quarantined -=  deadQuarantined;
       this.dead += deadQuarantined;
     } else {
-      this.infected = 0;
+      let lefoversQ = this.quarantined;
+      this.quaratined = 0;
+      this.dead += leftoversQ;
     }
+
   }
   quarantinedInfected(num){
     let q = Math.floor(this.infected * num);

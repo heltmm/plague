@@ -39,6 +39,7 @@ $(document).ready(function() {
     $('#infectiousRate').html(`<h1>Current Infectious Rate: ${religion.infectiousRate}</h1>`);
     $('#deathRate').html(`<h1>Current Death Rate: ${religion.deathRate}</h1>`);
     $('#plagueDay').html(`<h1>Plague Days: ${religion.day}</h1>`);
+    $('#cureDays').html(`<h1>Days To Cure: ${cdc.daysToCure}</h1>`);
     $('#cdc-message').html(`<h1>${cdc.message}</h1>`);
   }, 500);
 });
