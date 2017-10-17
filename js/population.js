@@ -1,6 +1,6 @@
 export class Population{
-  constructor() {
-    this.healthy = 7e9 - 1;
+  constructor(population) {
+    this.healthy = population;
     this.infected = 1;
     this.dead = 0;
     this.quarantined = 0;
@@ -11,6 +11,7 @@ export class Population{
     setInterval(() => {
       this.deathToll(plague);
       this.infect(plague);
+      plague.day++;
     } ,500);
   }
   infect(plague){

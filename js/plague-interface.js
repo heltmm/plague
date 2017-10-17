@@ -3,7 +3,7 @@ import { Population } from './../js/population.js';
 
 $(document).ready(function() {
   let religion = new Plague('Religion', 0.1, 'Air Born', 0.1);
-  let population = new Population();
+  let population = new Population(7e9-1);
 
 
   population.dailyInfect(religion);
@@ -37,5 +37,6 @@ $(document).ready(function() {
     $('#deadPop').html(`<h1>Current Dead Pop: ${numberWithCommas(population.dead)}</h1>`);
     $('#infectiousRate').html(`<h1>Current Infectious Rate: ${religion.infectiousRate}</h1>`);
     $('#deathRate').html(`<h1>Current Death Rate: ${religion.deathRate}</h1>`);
-  }, 1000);
+    $('#plagueDay').html(`<h1>Plague Days: ${religion.day}</h1>`);
+  }, 500);
 });

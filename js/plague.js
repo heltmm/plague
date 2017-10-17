@@ -4,6 +4,7 @@ export class Plague {
     this.infectiousRate = rate;
     this.transmissionVector = vector;
     this.deathRate = deathRate;
+    this.day = 0;
   }
   changeInfectiousRate(number){
     this.infectiousRate = (this.infectiousRate * number).toFixed(2);
