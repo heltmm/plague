@@ -14,7 +14,12 @@ export class Population{
       if(this.infected > 0  && this.quarantined >= 0){
         this.infect(plague, cdc);
       }
-      plague.day++;
+
+      if (this.healthy == 0  && this.infected == 0 && this.quarantined == 0) {
+        plague.day = plague.day;
+      } else {
+        plague.day++;
+      }
       if (cdc.daysToCure) {
         cdc.daysToCure--;
       }
